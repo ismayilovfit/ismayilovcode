@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İsmayılov Code - Python Kodunu İcra Et</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h1 span {
+            color: #00bfae;
+        }
+        
+        textarea {
+            width: 80%;
+            height: 150px;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            background-color: #f0f0f0;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #00bfae;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #008f7b;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        pre {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            overflow-x: auto;
+            word-wrap: break-word;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 14px;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span>İsmayılov</span> Code</h1>
+        <h2>Python Kodunu İcra Et</h2>
+        <textarea id="code" placeholder="Python kodunu buraya yazın..."></textarea><br>
+        <button onclick="runCode()">Kodu İcra Et</button>
+        <h2>Nəticə:</h2>
+        <pre id="result"></pre>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 İsmayılov Code - Python kodlarını test edin!</p>
+    </footer>
+
+    <script>
+        function runCode() {
+            const codeInput = document.getElementById("code").value;
+            fetch("http://127.0.0.1:5001/run_code", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ code: codeInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").textContent = data.result;
+            })
+            .catch(error => {
+                document.getElementById("result").textContent = `Xəta baş verdi: ${error}`;
+            });
+        }
+    </script>
+</body>
+</html>
